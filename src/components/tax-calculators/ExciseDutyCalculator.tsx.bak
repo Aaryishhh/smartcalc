@@ -1,0 +1,39 @@
+// Define excise duty rates for different products
+type ExciseProduct = "alcohol" | "tobacco" | "fuel" | "betting";
+
+// Define the rate structure
+interface ExciseDutyRate {
+  rate: number;
+  unit: string;
+}
+
+// UK Excise Duty rates (simplified)
+const ukExciseDutyRates = {
+  alcohol: {
+    beer: { rate: 19.08, unit: "per liter of pure alcohol" },
+    wine: { rate: 2.67, unit: "per 75cl bottle (12-15%)" },
+    spirits: { rate: 28.74, unit: "per liter of pure alcohol" },
+  },
+  tobacco: {
+    cigarettes: { rate: 16.5, unit: "% of retail price plus £262.90 per 1,000 cigarettes" },
+    cigars: { rate: 327.92, unit: "per kg" },
+    hand_rolling: { rate: 360.37, unit: "per kg" },
+  },
+  fuel: {
+    petrol: { rate: 0.53, unit: "per liter" },
+    diesel: { rate: 0.53, unit: "per liter" },
+    biodiesel: { rate: 0.53, unit: "per liter" },
+  },
+  betting: {
+    general: { rate: 15, unit: "% of profits" },
+    online: { rate: 21, unit: "% of profits" },
+  },
+};
+
+// Example usage
+const productType: ExciseProduct = "alcohol"; // Example product type
+const productRates = ukExciseDutyRates[productType];
+
+const selectedRate: ExciseDutyRate = productRates[productType as keyof typeof productRates];
+let taxAmount = 0;
+let description = "";

@@ -1,0 +1,505 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 35% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 280 70% 60%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
+    --radius: 0.5rem;
+
+    /* Custom color variables for different tax types */
+    --income-tax: 140 60% 40%;
+    --income-tax-light: 140 90% 96%;
+    --capital-gains: 200 70% 45%;
+    --capital-gains-light: 200 70% 94%;
+    --indirect-tax: 320 60% 45%;
+    --indirect-tax-light: 320 60% 94%;
+    --property-tax: 25 90% 50%;
+    --property-tax-light: 25 90% 96%;
+    --business-tax: 260 60% 50%;
+    --business-tax-light: 260 60% 94%;
+    --other-tax: 170 70% 40%;
+    --other-tax-light: 170 70% 94%;
+  }
+
+  .dark {
+    --background: 213 30% 12%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 20% 16%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 280 70% 50%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+
+    /* Custom dark mode color variables for different tax types */
+    --income-tax: 140 60% 45%;
+    --income-tax-light: 140 40% 16%;
+    --capital-gains: 200 70% 50%;
+    --capital-gains-light: 200 40% 16%;
+    --indirect-tax: 320 60% 50%;
+    --indirect-tax-light: 320 40% 16%;
+    --property-tax: 25 90% 55%;
+    --property-tax-light: 25 40% 16%;
+    --business-tax: 260 60% 55%;
+    --business-tax-light: 260 40% 16%;
+    --other-tax: 170 70% 45%;
+    --other-tax-light: 170 40% 16%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+  }
+
+  body:not(.dark) {
+    background-image: linear-gradient(to bottom right, hsl(215, 30%, 95%), hsl(210, 30%, 97%));
+    background-attachment: fixed;
+  }
+
+  body.dark {
+    background-image: linear-gradient(to bottom right, hsl(218, 35%, 10%), hsl(215, 40%, 14%));
+    background-attachment: fixed;
+  }
+
+  /* Make inputs larger and more touch-friendly on mobile */
+  @media (max-width: 640px) {
+    input, select, button {
+      @apply min-h-10 text-base;
+    }
+
+    .SelectTrigger {
+      @apply min-h-10;
+    }
+  }
+}
+
+/* Custom classes for the tax calculator app */
+.tax-layout {
+  @apply space-y-6 p-4 md:p-8 lg:p-12;
+}
+
+.tax-title {
+  @apply text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent;
+}
+
+.dark .tax-title {
+  @apply bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400;
+}
+
+.tax-subtitle {
+  @apply text-center text-muted-foreground mb-10;
+}
+
+.tax-card {
+  @apply border-2 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl backdrop-blur-sm bg-white/90;
+}
+
+.dark .tax-card {
+  @apply bg-card/80 backdrop-blur-sm border-opacity-30 hover:border-opacity-40;
+}
+
+.tax-card-personal {
+  @apply border-[hsl(var(--income-tax))] bg-gradient-to-tr from-white/95 to-[hsl(var(--income-tax-light))];
+}
+
+.dark .tax-card-personal {
+  @apply border-[hsl(var(--income-tax))] bg-gradient-to-tr from-card/95 to-[hsl(var(--income-tax-light))];
+}
+
+.tax-card-indirect {
+  @apply border-[hsl(var(--indirect-tax))] bg-gradient-to-tr from-white/95 to-[hsl(var(--indirect-tax-light))];
+}
+
+.dark .tax-card-indirect {
+  @apply border-[hsl(var(--indirect-tax))] bg-gradient-to-tr from-card/95 to-[hsl(var(--indirect-tax-light))];
+}
+
+.tax-card-property {
+  @apply border-[hsl(var(--property-tax))] bg-gradient-to-tr from-white/95 to-[hsl(var(--property-tax-light))];
+}
+
+.dark .tax-card-property {
+  @apply border-[hsl(var(--property-tax))] bg-gradient-to-tr from-card/95 to-[hsl(var(--property-tax-light))];
+}
+
+.tax-card-business {
+  @apply border-[hsl(var(--business-tax))] bg-gradient-to-tr from-white/95 to-[hsl(var(--business-tax-light))];
+}
+
+.dark .tax-card-business {
+  @apply border-[hsl(var(--business-tax))] bg-gradient-to-tr from-card/95 to-[hsl(var(--business-tax-light))];
+}
+
+.tax-card-other {
+  @apply border-[hsl(var(--other-tax))] bg-gradient-to-tr from-white/95 to-[hsl(var(--other-tax-light))];
+}
+
+.dark .tax-card-other {
+  @apply border-[hsl(var(--other-tax))] bg-gradient-to-tr from-card/95 to-[hsl(var(--other-tax-light))];
+}
+
+.tax-button {
+  @apply px-4 py-2 rounded-md text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg;
+}
+
+.tax-button-personal {
+  @apply bg-[hsl(var(--income-tax))] hover:brightness-110;
+}
+
+.tax-button-indirect {
+  @apply bg-[hsl(var(--indirect-tax))] hover:brightness-110;
+}
+
+.tax-button-property {
+  @apply bg-[hsl(var(--property-tax))] hover:brightness-110;
+}
+
+.tax-button-business {
+  @apply bg-[hsl(var(--business-tax))] hover:brightness-110;
+}
+
+.tax-button-other {
+  @apply bg-[hsl(var(--other-tax))] hover:brightness-110;
+}
+
+.tax-category-header {
+  @apply text-xl font-semibold;
+}
+
+.tax-category-header-personal {
+  @apply text-[hsl(var(--income-tax))];
+}
+
+.tax-category-header-indirect {
+  @apply text-[hsl(var(--indirect-tax))];
+}
+
+.tax-category-header-property {
+  @apply text-[hsl(var(--property-tax))];
+}
+
+.tax-category-header-business {
+  @apply text-[hsl(var(--business-tax))];
+}
+
+.tax-category-header-other {
+  @apply text-[hsl(var(--other-tax))];
+}
+
+.tax-result-card {
+  @apply mt-6 space-y-2 rounded-md border p-4 animate-in fade-in duration-500 bg-white/80 backdrop-blur-sm;
+}
+
+.dark .tax-result-card {
+  @apply bg-card/80 backdrop-blur-sm;
+}
+
+.glass-card {
+  @apply bg-white/70 backdrop-blur-sm border border-white/30 shadow-xl;
+}
+
+.dark .glass-card {
+  @apply bg-card/70 backdrop-blur-sm border-black/20 shadow-xl;
+}
+
+.region-button {
+  @apply px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2;
+}
+
+.region-button-active {
+  @apply bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg hover:shadow-xl scale-105 font-semibold;
+}
+
+.dark .region-button-active {
+  @apply bg-gradient-to-r from-blue-500 to-indigo-500;
+}
+
+.region-button-inactive {
+  @apply bg-gray-500/80 hover:bg-gray-600/80;
+}
+
+.dark .region-button-inactive {
+  @apply bg-gray-700/80 hover:bg-gray-600/80;
+}
+
+/* Improved tab navigation styling */
+.tab-nav {
+  @apply bg-white/50 backdrop-blur-sm rounded-xl shadow-md mb-6 p-2 w-full;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.dark .tab-nav {
+  @apply bg-card/70 backdrop-blur-sm;
+}
+
+/* Custom styles for main tabs navigation */
+.main-tabs-navigation {
+  @apply bg-white/50 backdrop-blur-sm rounded-xl shadow-md mb-6 p-2 w-full;
+}
+
+.dark .main-tabs-navigation {
+  @apply bg-card/70;
+}
+
+.main-tabs-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.main-tab-button {
+  @apply flex flex-col items-center justify-center gap-1 text-center p-2 rounded-lg bg-white/40 dark:bg-gray-800/40;
+  @apply border border-transparent transition-all duration-200 outline-none;
+}
+
+.main-tab-button:hover {
+  @apply bg-white/60 dark:bg-gray-700/60;
+}
+
+.main-tab-button.active {
+  @apply border-opacity-50 shadow-md;
+}
+
+.tab-icon {
+  @apply text-xl;
+}
+
+.tab-label {
+  @apply whitespace-normal text-xs font-medium leading-tight;
+}
+
+.subtabs-navigation {
+  @apply mt-4;
+}
+
+.subtabs-flex {
+  @apply flex flex-wrap gap-1 bg-white/50 dark:bg-gray-800/50 rounded-xl p-1;
+}
+
+.subtab-button {
+  @apply px-3 py-2 text-sm whitespace-nowrap rounded-md flex-grow-0;
+  @apply font-medium border border-transparent transition-all duration-200;
+}
+
+.subtab-button:hover {
+  @apply bg-white/60 dark:bg-gray-700/60;
+}
+
+.subtab-button.active {
+  @apply shadow-md bg-white dark:bg-gray-700 border-opacity-30;
+}
+
+.subtab-content {
+  @apply pt-0;
+}
+
+/* Responsive tab grid for different screen sizes */
+@media (max-width: 640px) {
+  .main-tabs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .main-tab-button {
+    @apply p-1 text-xs;
+  }
+
+  .tab-icon {
+    @apply text-lg;
+  }
+
+  .subtab-button {
+    @apply min-w-0 px-2 py-1 text-xs;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-tabs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Make subtabs more readable */
+.tax-card [role="tablist"] {
+  @apply p-1 bg-opacity-80 dark:bg-opacity-80;
+}
+
+.tax-card [role="tab"] {
+  @apply font-medium border border-transparent;
+}
+
+.tax-card [role="tab"][data-state="active"] {
+  @apply border-opacity-30 shadow-sm;
+}
+
+/* Subtabs specific styles */
+.subtabs-list {
+  @apply flex-wrap justify-center;
+}
+
+.subtabs-list [role="tab"] {
+  @apply min-w-20 text-center flex-grow-0 flex-shrink-0 mb-1;
+}
+
+@media (max-width: 640px) {
+  .subtabs-list [role="tab"] {
+    @apply min-w-0 px-2 py-1 text-xs;
+  }
+}
+
+.calculator-container {
+  @apply p-4 sm:p-6 rounded-xl shadow-lg bg-white/80 backdrop-blur-sm border-2;
+}
+
+.dark .calculator-container {
+  @apply bg-card/80 backdrop-blur-sm border-opacity-30;
+}
+
+.print-section {
+  display: none;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-section {
+    display: block;
+  }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 480px) {
+  .region-button {
+    @apply justify-center text-sm;
+  }
+
+  .tax-card {
+    @apply p-2;
+  }
+
+  .calculator-container {
+    @apply p-3;
+  }
+
+  .CardContent {
+    @apply px-3 py-2;
+  }
+
+  .CardHeader {
+    @apply px-3 py-4;
+  }
+}
+
+/* Copyright styling */
+.copyright-notice {
+  @apply mt-8 text-center text-sm text-muted-foreground border-t border-gray-200 dark:border-gray-800 pt-4;
+}
+
+.copyright-notice p {
+  @apply opacity-80 hover:opacity-100 transition-opacity;
+}
+
+.contact-link {
+  @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 font-medium;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.contact-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -1px;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.contact-link:hover:after {
+  width: 100%;
+}
+
+/* New styles for contact container */
+.contact-container {
+  @apply ml-0 sm:ml-2 mt-2 sm:mt-0 block sm:inline-block;
+}
+
+.contact-link-large {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+}
+
+.contact-link-large button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-link-large:hover button {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+  .copyright-notice p {
+    @apply text-xs;
+  }
+}
+
+/* Mobile-specific styles */
