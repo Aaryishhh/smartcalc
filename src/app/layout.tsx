@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans, GeistMono } from "geist/font";
 import "./globals.css";
 import ClientBody from "./ClientBody";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -12,28 +12,13 @@ import { Toaster } from "@/components/ui/toaster";
 const GoogleAnalytics = () => null;
 const GoogleAdsense = () => null;
 
-// Optimize font loading
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap", // Add display swap for better performance
-  preload: true,
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap", // Add display swap for better performance
-  preload: true,
-});
-
 export const metadata: Metadata = {
   title: "Smart Tax Calculator | Free Online Tax Calculators",
   description: "Free tax calculators for income tax, VAT, capital gains, inheritance tax, stamp duty, dividend tax, and more. Accurate 2025 tax calculations for personal and business purposes.",
   metadataBase: new URL('https://smartcalculator.uk'),
   keywords: "tax calculator, income tax calculator, VAT calculator, capital gains tax, dividend tax, inheritance tax, stamp duty calculator, tax calculation, free tax calculator",
   verification: {
-    google: "google-site-verification=G-H4S817RX07", // Google Analytics verification code
+    google: "google-site-verification=G-H4S817RX07",
   },
   alternates: {
     canonical: '/',
@@ -110,9 +95,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans antialiased`} id="root">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
+      </head>
+      <body className="min-h-screen bg-background font-sans antialiased" id="root">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

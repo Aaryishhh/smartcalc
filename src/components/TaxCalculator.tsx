@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -106,10 +107,17 @@ interface CategoryType {
   icon: string;
 }
 
+interface TabType {
+  id: string;
+  label: string;
+  component: React.ReactNode; // Changed from JSX.Element
+}
+
+
 interface SubTabType {
   id: string;
   label: string;
-  component: JSX.Element;
+  component: React.ReactNode;
 }
 
 interface SubTabsType {
