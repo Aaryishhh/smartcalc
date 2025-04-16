@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/toaster";
+import AdsterraAd from "@/components/ui/AdsterraAd";
+
 
 // Component mocks for features we're not implementing right now
 const GoogleAnalytics = () => null;
@@ -110,6 +112,7 @@ export default function RootLayout({
           <ClientBody>
             <div className="relative flex min-h-screen flex-col">
               <Header />
+              <AdsterraAd />
               <main className="flex-1">
                 <div className="container py-6 md:py-8 max-w-screen-2xl">
                   <Breadcrumbs />
