@@ -72,4 +72,5 @@ MIT
 ## Disclaimer
 
 This tax calculator is provided for informational purposes only and should not be considered as tax advice. Tax laws and regulations change frequently, and calculations may not reflect the most current regulations. Please consult with a qualified tax professional before making any financial decisions based on these calculations.
-## Tested with Arguss Code Review
+## Reviewed by Arguss
+
